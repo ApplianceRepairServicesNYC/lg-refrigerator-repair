@@ -645,17 +645,17 @@
                         <li><a href="#lg-singledoor-repair">LG Single Door / Mini Refrigerator Repair</a></li>
                         <li class="submenu-toggle" id="additionalToggle">Compressor Repair Services</li>
                         <div class="additional-submenu" id="additionalSubmenu">
-                            <li><a href="#lg-reciprocating-repair">Reciprocating Compressor Repair</a></li>
-                            <li><a href="#lg-rotary-repair">Rotary Compressor Repair</a></li>
-                            <li><a href="#lg-linear-repair">Linear Compressor Repair</a></li>
-                            <li><a href="#lg-inverterlinear-repair">Inverter Linear Compressor Repair</a></li>
+                            <li><a href="#lg-reciprocating-repair" class="compressor-nav-link">Reciprocating Compressor Repair</a></li>
+                            <li><a href="#lg-rotary-repair" class="compressor-nav-link">Rotary Compressor Repair</a></li>
+                            <li><a href="#lg-linear-repair" class="compressor-nav-link">Linear Compressor Repair</a></li>
+                            <li><a href="#lg-inverterlinear-repair" class="compressor-nav-link">Inverter Linear Compressor Repair</a></li>
                         </div>
                         <li class="submenu-toggle" id="serviceAreasToggle">Service Areas</li>
                         <div class="service-areas-submenu" id="serviceAreasSubmenu">
-                            <li><a href="#sa-service-areas">Manhattan</a></li>
-                            <li><a href="#sa-service-areas">Brooklyn</a></li>
-                            <li><a href="#sa-service-areas">Queens</a></li>
-                            <li><a href="#sa-service-areas">Bronx</a></li>
+                            <li><a href="#sa-service-areas" class="scroll-link">Manhattan</a></li>
+                            <li><a href="#sa-service-areas" class="scroll-link">Brooklyn</a></li>
+                            <li><a href="#sa-service-areas" class="scroll-link">Queens</a></li>
+                            <li><a href="#sa-service-areas" class="scroll-link">Bronx</a></li>
                         </div>
                     </ul>
                 </div>
@@ -2040,10 +2040,10 @@
                 <div class="footer-column">
                     <h3>Compressor Repair</h3>
                     <ul>
-                        <li><a href="#lg-reciprocating-repair" class="scroll-link">Reciprocating Compressor</a></li>
-                        <li><a href="#lg-rotary-repair" class="scroll-link">Rotary Compressor</a></li>
-                        <li><a href="#lg-linear-repair" class="scroll-link">Linear Compressor</a></li>
-                        <li><a href="#lg-inverterlinear-repair" class="scroll-link">Inverter Linear Compressor</a></li>
+                        <li><a href="#lg-reciprocating-repair" class="compressor-nav-link">Reciprocating Compressor</a></li>
+                        <li><a href="#lg-rotary-repair" class="compressor-nav-link">Rotary Compressor</a></li>
+                        <li><a href="#lg-linear-repair" class="compressor-nav-link">Linear Compressor</a></li>
+                        <li><a href="#lg-inverterlinear-repair" class="compressor-nav-link">Inverter Linear Compressor</a></li>
                     </ul>
                 </div>
             </div>
@@ -2141,6 +2141,52 @@
             additionalItems.forEach(function(item) {
                 item.addEventListener('click', function(e) {
                     e.stopPropagation();
+                });
+            });
+            
+            // Compressor nav links - open section and scroll
+            var compressorNavLinks = document.querySelectorAll('.compressor-nav-link');
+            compressorNavLinks.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var targetId = this.getAttribute('href').substring(1);
+                    var grid = document.getElementById('compressorServicesGrid');
+                    var btn = document.getElementById('compressorToggleBtn');
+                    
+                    // Open compressor section if closed
+                    if (grid.style.display === 'none') {
+                        grid.style.display = 'grid';
+                        btn.innerHTML = 'Hide Compressor Services <span style="margin-left: 8px;">▲</span>';
+                    }
+                    
+                    // Close mobile nav dropdown
+                    if (servicesDropdown) servicesDropdown.classList.remove('show');
+                    
+                    // Scroll to specific compressor after brief delay
+                    setTimeout(function() {
+                        var targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }, 100);
+                });
+            });
+            
+            // Service area nav links - scroll to section
+            var serviceAreaNavLinks = document.querySelectorAll('.service-areas-submenu .scroll-link');
+            serviceAreaNavLinks.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    var targetId = this.getAttribute('href').substring(1);
+                    
+                    // Close mobile nav dropdown
+                    if (servicesDropdown) servicesDropdown.classList.remove('show');
+                    
+                    // Scroll to service areas section
+                    var targetElement = document.getElementById(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                 });
             });
 
